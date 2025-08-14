@@ -125,28 +125,6 @@ const Features = () => {
             and long-lasting satisfying treat that connects your cherished companion to the spirit of the world's highest peaks.
           </p>
         </motion.div>
-
-        <motion.div
-          className="features-cta"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
-          <h3>Ready to Give Your Dog the Best?</h3>
-          <motion.button
-            className="btn"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const element = document.getElementById('buy-now');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            Shop Now
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

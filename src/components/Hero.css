@@ -139,7 +139,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 90vh;
+    min-height: 45vh;
     padding-top: 80px;
   }
   
@@ -153,6 +153,10 @@
   
   .hero-buttons {
     justify-content: center;
+  }
+  
+  .hero-image {
+    display: none;
   }
   
   .shape-1, .shape-2, .shape-3 {
