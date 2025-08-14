@@ -83,8 +83,6 @@ const Products = () => {
                 <motion.img
                   src={product.image}
                   alt={product.title}
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
                 />
                 <div className="product-badge">
                   Premium

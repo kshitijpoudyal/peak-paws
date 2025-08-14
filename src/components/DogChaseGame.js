@@ -109,6 +109,44 @@ const DogChaseGame = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [gameStarted, gameWon]);
 
+  // Handle touch controls for mobile
+  useEffect(() => {
+    if (!gameStarted || gameWon) return;
+
+    const gameField = document.querySelector('.game-field');
+    if (!gameField) return;
+
+    const handleTouchStart = (e) => {
+      e.preventDefault();
+    };
+
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = gameField.getBoundingClientRect();
+      const touchX = touch.clientX - rect.left;
+      const fieldWidth = rect.width;
+      const newPosition = (touchX / fieldWidth) * 100;
+      
+      // Clamp position between 0 and 92 (accounting for dog width)
+      setDogPosition(Math.max(0, Math.min(92, newPosition - 4))); // -4 to center the dog on touch point
+    };
+
+    const handleTouchEnd = (e) => {
+      e.preventDefault();
+    };
+
+    gameField.addEventListener('touchstart', handleTouchStart, { passive: false });
+    gameField.addEventListener('touchmove', handleTouchMove, { passive: false });
+    gameField.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    return () => {
+      gameField.removeEventListener('touchstart', handleTouchStart);
+      gameField.removeEventListener('touchmove', handleTouchMove);
+      gameField.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [gameStarted, gameWon]);
+
   const startGame = () => {
     setGameStarted(true);
     setScore(0);
@@ -196,7 +234,8 @@ const DogChaseGame = () => {
               transition={{ duration: 0.5 }}
             >
               <h3>🎮 Ready to Play?</h3>
-              <p>Use ← → arrow keys or A/D keys to move the dog</p>
+              <p>Desktop: Use ← → arrow keys or A/D keys to move the dog</p>
+              <p>Mobile: Touch and drag to move the dog</p>
               <p>Catch {TARGET_SCORE} falling chews to win!</p>
               <motion.button
                 className="start-button"
@@ -293,7 +332,7 @@ const DogChaseGame = () => {
 
               {!gameWon && (
                 <div className="game-controls">
-                  <p>Use ← → arrows or A/D keys to move</p>
+                  <p>Desktop: Use ← → arrows or A/D keys | Mobile: Touch and drag</p>
                   <motion.button
                     className="reset-button"
                     onClick={resetGame}
